@@ -1,0 +1,1164 @@
+% This LaTeX was auto-generated from MATLAB code.
+% To make changes, update the MATLAB code and export to LaTeX again.
+
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{epstopdf}
+\usepackage[table]{xcolor}
+\usepackage{matlab}
+
+\sloppy
+\epstopdfsetup{outdir=./}
+\graphicspath{ {./assignment_corrected_final_images/} }
+
+\begin{document}
+
+\begin{matlabcode}
+%%all the parameters
+total.mass = 52;
+total.len = 1.6; %in meter
+total.len_paper = 14; %in cm
+total.k = total.len/total.len_paper; %scale
+
+%Body 7 cone
+body7.r=1*total.k;
+body7.l = 2.2*total.k; %cone
+body7.name = 'cone';
+body7.cg = [(-total.len/2 + 3*body7.l/4), 0, 0]
+\end{matlabcode}
+\begin{matlaboutput}
+body7 = 
+       r: 0.1143
+       l: 0.2514
+    name: 'cone'
+      cg: [-0.6114 0 0]
+
+\end{matlaboutput}
+\begin{matlabcode}
+
+%body 1
+body1.name = 'main_cylinder_body';
+body1.r = 1*total.k;
+body1.l = 10.8*total.k; 
+body1.cg = [(-total.len/2 + body7.l +(body1.l)/2 ) , 0, 0]
+\end{matlabcode}
+\begin{matlaboutput}
+body1 = 
+    name: 'main_cylinder_body'
+       r: 0.1143
+       l: 1.2343
+      cg: [0.0686 0 0]
+
+\end{matlaboutput}
+\begin{matlabcode}
+body1.x1 = -total.len/2 + body7.l;
+body1.x2 = total.len/2 - body1.r;
+
+% Body 8 half spheroid
+body8.name = 'hemisphere';
+body8.r = 1*total.k;
+body8.cg = [(total.len/2 - 5*body8.r/8), 0, 0 ]
+\end{matlabcode}
+\begin{matlaboutput}
+body8 = 
+    name: 'hemisphere'
+       r: 0.1143
+      cg: [0.7286 0 0]
+
+\end{matlaboutput}
+\begin{matlabcode}
+body8.x1 = body1.x2;
+body8.x2 = total.len/2;
+
+%body 2 thurster 1
+body2.name = 'thurster 1';
+body2.r = 0.13/2;
+body2.l =  2.2*total.k;
+body2.cg = [(-total.len/2 + body7.l +body2.l/2), body1.r+body2.r, 0]
+\end{matlabcode}
+\begin{matlaboutput}
+body2 = 
+    name: 'thurster 1'
+       r: 0.0650
+       l: 0.2514
+      cg: [-0.4229 0.1793 0]
+
+\end{matlaboutput}
+\begin{matlabcode}
+body2.x1 = body1.x1;
+body2.x2 = body2.x1 + body2.l;
+
+%body 3 thurster 2
+body3.name = 'thurster 2';
+body3.r = 0.13/2;
+body3.l =  2.2*total.k;
+body3.cg = [(-total.len/2 + body7.l +body2.l/2), -(body1.r+body2.r), 0]
+\end{matlabcode}
+\begin{matlaboutput}
+body3 = 
+    name: 'thurster 2'
+       r: 0.0650
+       l: 0.2514
+      cg: [-0.4229 -0.1793 0]
+
+\end{matlaboutput}
+\begin{matlabcode}
+body3.x1 = body1.x1;
+body3.x2 = body3.x1 + body3.l;
+
+
+%body 4 rect
+body4.name = 'sensor/ rect';
+body4.a = 0.7 *total.k;
+body4.b = 0.3 *total.k;
+body4.c = 2.25 *total.k;
+body4.cg = [(-total.len/4 - body4.a/2), 0, -(body1.r + body4.c/2)]
+\end{matlabcode}
+\begin{matlaboutput}
+body4 = 
+    name: 'sensor/ rect'
+       a: 0.0800
+       b: 0.0343
+       c: 0.2571
+      cg: [-0.4400 0 -0.2429]
+
+\end{matlaboutput}
+\begin{matlabcode}
+body4.z1 = -(body1.r +body4.c);
+body4.z2 = -(body1.r);
+
+%body 5 cyl
+body5.name = 'cyl1'; 
+body5.l = 0.5*total.k;
+body5.r = 0.25*total.k;
+body5.cg = [3.2*total.k+body5.r, 0, -body1.r-body5.l/2]
+\end{matlabcode}
+\begin{matlaboutput}
+body5 = 
+    name: 'cyl1'
+       l: 0.0571
+       r: 0.0286
+      cg: [0.3943 0 -0.1429]
+
+\end{matlaboutput}
+\begin{matlabcode}
+
+%body 6 cyl2 small
+
+body6.name = 'cyl2/small'; 
+body6.l = 0.25*total.k;
+body6.r = 0.25*total.k;
+body6.cg = [5.5*total.k+body6.r, 0, -body1.r-body6.l/2]
+\end{matlabcode}
+\begin{matlaboutput}
+body6 = 
+    name: 'cyl2/small'
+       l: 0.0286
+       r: 0.0286
+      cg: [0.6571 0 -0.1286]
+
+\end{matlaboutput}
+\begin{matlabcode}
+
+\end{matlabcode}
+
+
+\begin{matlabcode}
+%total volume calc
+body1.volume = pi*body1.l* body1.r^2;
+body2.volume = pi*body2.l* body2.r^2;
+body3.volume = pi*body3.l* body3.r^2;
+body4.volume = body4.a* body4.b *body4.c;
+body5.volume = pi*body5.l* body5.r^2;
+body6.volume = pi*body6.l* body6.r^2;
+body7.volume = (1/3)*pi*body7.l* body7.r^2;
+body8.volume = (2/3)*pi* body8.r^3;
+
+total.vol = body1.volume + body2.volume +body3.volume +body4.volume +body5.volume +body6.volume +body7.volume +body8.volume;
+\end{matlabcode}
+
+
+\begin{matlabcode}
+%density cal
+total.mass = 52;
+total.density =  total.mass/total.vol;
+\end{matlabcode}
+
+
+\begin{matlabcode}
+%individual mass calc
+body1.m = total.density*body1.volume;
+body2.m = total.density*body2.volume;
+body3.m = total.density*body3.volume;
+body4.m = total.density*body4.volume;
+body5.m = total.density*body5.volume;
+body6.m = total.density*body6.volume;
+body7.m = total.density*body7.volume;
+body8.m = total.density*body8.volume;
+
+total.mass = body1.m+body2.m+body3.m+body4.m+body5.m+body6.m+body7.m+body8.m
+\end{matlabcode}
+\begin{matlaboutput}
+total = 
+         mass: 52
+          len: 1.6000
+    len_paper: 14
+            k: 0.1143
+          vol: 0.0648
+      density: 802.3273
+
+\end{matlaboutput}
+
+
+\begin{matlabcode}
+%inertia calc
+body1.I = zeros(3,1);
+body1.I(1) = (body1.m*(body1.r)^2)/2;
+body1.I(2) = body1.m*(((body1.r)^2)/4 +((body1.l)^2)/12);
+body1.I(3) = body1.I(2);
+
+%body2
+body2.I = zeros(3,1);
+body2.I(1) = (body2.m*(body2.r)^2)/2;
+body2.I(2) = body2.m*(((body2.r)^2)/4 +((body2.l)^2)/12);
+body2.I(3) = body2.I(2);
+
+%body3
+body3.I = body2.I;
+
+%body4
+body4.I = zeros(3,1);
+body4.I(1) = (body4.m/12)*(body4.b^2 + body4.c^2);
+body4.I(2) = (body4.m/12)*(body4.a^2 + body4.c^2);
+body4.I(3) = (body4.m/12)*(body4.b^2 + body4.a^2);
+
+%body5
+body5.I = zeros(3,1);
+body5.I(1) = body5.m*(((body5.r)^2)/4 +((body5.l)^2)/12);
+body5.I(2) = body5.I(1);
+body5.I(3) = (body5.m*(body5.r)^2)/2;
+
+%body6
+body6.I = zeros(3,1);
+body6.I(1) = body6.m*(((body6.r)^2)/4 +((body6.l)^2)/12);
+body6.I(2) = body6.I(1);
+body6.I(3) = (body6.m*(body6.r)^2)/2;
+
+%body7
+body7.I = zeros(3,1);
+body7.I(1) = (3*body7.m*body7.r^2)/10;
+body7.I(2) = (3*body7.m/20)*(body7.r^2+4*body7.l^2);
+body7.I(3) = body7.I(2);
+
+%body8
+
+body8.I = zeros(3,1);
+body8.I(1) = (2/5)*body8.m*body8.r^2;
+body8.I(2) = (83/320)*body8.m*body8.r^2;
+body8.I(3) = body8.I(2);
+
+\end{matlabcode}
+
+
+\begin{matlabcode}
+%calculating mass matrix
+%ig1 is the inertia matrix
+
+body1.M = [body1.m*eye(3), zeros(3,3);
+      zeros(3,3), diag(body1.I)];
+
+
+%body 2
+body2.M = [body2.m*eye(3), zeros(3,3);
+      zeros(3,3), diag(body2.I)];
+
+
+%body 3
+body3.M = [body3.m*eye(3), zeros(3,3);
+      zeros(3,3), diag(body3.I)];
+
+
+%body 4
+body4.M = [body4.m*eye(3), zeros(3,3);
+      zeros(3,3), diag(body4.I)];
+
+
+%body 5
+body5.M = [body5.m*eye(3), zeros(3,3);
+      zeros(3,3), diag(body5.I)];
+
+
+%body 6
+body6.M = [body6.m*eye(3), zeros(3,3);
+      zeros(3,3), diag(body6.I)];
+
+
+%body 7
+body7.M = [body7.m*eye(3), zeros(3,3);
+      zeros(3,3), diag(body7.I)];
+
+
+%body 8
+body8.M = [body8.m*eye(3), zeros(3,3);
+      zeros(3,3), diag(body8.I)];
+
+\end{matlabcode}
+
+
+\begin{matlabcode}
+%converting all the M to cg
+%body 1
+total.cg = [0, 0, 0];
+body1.rg = body1.cg-total.cg;
+body1.H = H(body1.rg);
+body1.Mcg = body1.H' * body1.M * body1.H;
+
+
+%body 2
+body2.rg = body2.cg-total.cg;
+body2.H = H(body2.rg);
+body2.Mcg = body2.H' * body2.M * body2.H;
+
+
+%body 3
+body3.rg = body3.cg-total.cg;
+body3.H = H(body3.rg);
+body3.Mcg = body3.H' * body3.M * body3.H;
+
+%body 4
+body4.rg = body4.cg-total.cg;
+body4.H = H(body4.rg);
+body4.Mcg = body4.H' * body4.M * body4.H;
+
+
+%body 5
+body5.rg = body5.cg-total.cg;
+body5.H = H(body5.rg);
+body5.Mcg = body5.H' * body5.M * body5.H;
+
+%body 6
+body6.rg = body6.cg-total.cg;
+body6.H = H(body6.rg);
+body6.Mcg = body6.H' * body6.M * body6.H;
+
+%body 7
+body7.rg = body7.cg-total.cg;
+body7.H = H(body7.rg);
+body7.Mcg = body7.H' * body7.M * body7.H;
+
+%body 8
+body8.rg = body8.cg-total.cg;
+body8.H = H(body8.rg);
+body8.Mcg = body8.H' * body8.M * body8.H;
+
+total.Mcg = body1.Mcg+body2.Mcg+body3.Mcg+body4.Mcg+body5.Mcg+body6.Mcg+body7.Mcg+body8.Mcg 
+\end{matlabcode}
+\begin{matlaboutput}
+total = 
+         mass: 52
+          len: 1.6000
+    len_paper: 14
+            k: 0.1143
+          vol: 0.0648
+      density: 802.3273
+           cg: [0 0 0]
+          Mcg: [6x6 double]
+           Ma: [6x6 double]
+
+\end{matlaboutput}
+\begin{matlabcode}
+total.Mcg
+\end{matlabcode}
+\begin{matlaboutput}
+ans = 6x6    
+   52.0000         0         0         0   -0.1618         0
+         0   52.0000         0    0.1618         0    0.4984
+         0         0   52.0000         0   -0.4984         0
+         0    0.1618         0    0.5127         0   -0.0489
+   -0.1618         0   -0.4984         0    9.1490         0
+         0    0.4984         0   -0.0489         0    9.2813
+
+\end{matlaboutput}
+
+
+\begin{matlabcode}
+%added mass calculation
+%added mass for the main body with fins
+%we devide the body into 4 portions
+% then calculate the added mass of each portion wrt cg
+% then add them to get the total added mass of the body with fins
+syms x;
+%added mass calculation Fin Ma13
+Ma13 = zeros(6,6);
+rho = 1000;
+
+afin = body1.r;
+bfin = body1.r + 2*body2.r;
+
+%Calculation of a22
+Ca = 1;
+Ar = pi*(afin)^2;
+a22 = rho * Ca * Ar;
+m22 = a22*body2.l; % length of thurster 
+
+%Calculation of m33
+Ca = 1-(afin/bfin)^2 + (afin/bfin)^4;
+Ar = pi * bfin^2;
+a33 = rho * Ca * Ar;
+m33 = a33*body2.l;
+
+%Calculation of m44
+alfa = pi-(asin(2*afin*bfin/(afin^2+bfin^2)));
+fa = 2*(alfa)^2 - alfa*sin(4*alfa) + 0.5*(sin(2*alfa))^2;
+a44 = (rho*(afin^4)*(fa*(csc(alfa)^4)-pi^2))/(2*pi);
+m44 = a44*body2.l;
+
+
+fun = @(x) a33*x.^2;
+m55 = integral(fun, body2.x1, body2.x2);
+
+fun = @(x) a22*x.^2;
+m66 = integral(fun, body2.x1, body2.x2);
+
+fun = @(x) a22.*x;
+m26 = integral(fun, body2.x1, body2.x2);
+
+fun = @(x) -a33.*x;
+m35 = integral(fun, body2.x1, body2.x2);
+
+Ma13(2,2) = m22;
+Ma13(3,3) = m33;
+Ma13(4,4) = m44;
+Ma13(5,5) = m55;
+Ma13(6,6) = m66;
+Ma13(2,6) = m26;
+Ma13(6,2) = m26;
+Ma13(3,5) = m35;
+Ma13(5,3) = m35
+\end{matlabcode}
+\begin{matlaboutput}
+Ma13 = 6x6    
+         0         0         0         0         0         0
+         0   10.3169         0         0         0   -4.3626
+         0         0   39.0780         0   16.5244         0
+         0         0         0    0.1284         0         0
+         0         0   16.5244         0    7.1933         0
+         0   -4.3626         0         0         0    1.8991
+
+\end{matlaboutput}
+\begin{matlabcode}
+
+\end{matlabcode}
+
+
+\begin{matlabcode}
+%Added Mass Calculation of Cylinder section Ma12
+%wrt cg
+  
+Ca = 1;
+Ar = pi*body1.r^2; 
+  
+%Body 12
+Ma12 = zeros(6,6);
+a22 = rho *Ca * Ar;
+m22 = a22*(body1.x2 - body2.x2); % 6+2.6 is the len of the section
+
+a33 =a22;
+m33 = m22;
+m44 =0;
+    
+    %calcultatin m55
+fun = @(x) a33*x.^2;
+m55 = integral(fun, body2.x2, body1.x2);
+    
+    %calcultatin m66
+fun = @(x) a22*x.^2;
+m66 = integral(fun, body2.x2, body1.x2);
+    
+    %calcultatin m26
+fun = @(x) a22.*x;
+m26 = integral(fun, body2.x2, body1.x2);
+    
+    %calcultatin m35
+fun = @(x) -a33.*x;
+m35 = integral(fun, body2.x2, body1.x2);
+    
+Ma12(2,2) = m22;
+Ma12(3,3) = m33;
+Ma12(4,4) = m44;
+Ma12(5,5) = m55;
+Ma12(6,6) = m66;
+Ma12(2,6) = m26;
+Ma12(6,2) = m26;
+Ma12(3,5) = m35;
+Ma12(5,3) = m35
+\end{matlabcode}
+\begin{matlaboutput}
+Ma12 = 6x6    
+         0         0         0         0         0         0
+         0   40.3296         0         0         0    7.8355
+         0         0   40.3296         0   -7.8355         0
+         0         0         0         0         0         0
+         0         0   -7.8355         0    4.7689         0
+         0    7.8355         0         0         0    4.7689
+
+\end{matlaboutput}
+\begin{matlabcode}
+
+\end{matlabcode}
+
+
+\begin{matlabcode}
+%Added Mass Calculation of shpere Ma11
+%wrt cg
+Ma11 = zeros(6,6);
+rho = 1000;
+Ca = 1;
+syms x;
+R_sphere =  sqrt(body8.r^2 - (x-body1.x2).^2);
+Ar =  pi* R_sphere^2;
+
+a22 =  rho*Ca*Ar;
+m22 = int(a22, [body8.x1,body8.x2] );
+
+a33 = a22;
+m33 = m22;
+m44 = 0;
+
+a55 =  a33;
+m55 = int(a33*x^2, [body8.x1,body8.x2]);
+
+m66 = m55;
+
+a26 = a22;
+m26 = int(a22*x, [body8.x1,body8.x2]);
+
+m35 = -m26;
+
+Ma11(2,2) = m22;
+Ma11(3,3) = m33;
+Ma11(4,4) = m44;
+Ma11(5,5) = m55;
+Ma11(6,6) = m66;
+Ma11(2,6) = m26;
+Ma11(6,2) = m26;
+Ma11(3,5) = m35;
+Ma11(5,3) = m35
+\end{matlabcode}
+\begin{matlaboutput}
+Ma11 = 6x6    
+         0         0         0         0         0         0
+         0    3.1263         0         0         0    2.2778
+         0         0    3.1263         0   -2.2778         0
+         0         0         0         0         0         0
+         0         0   -2.2778         0    1.6619         0
+         0    2.2778         0         0         0    1.6619
+
+\end{matlaboutput}
+
+
+\begin{matlabcode}
+%Added Mass Calculation of Cone Ma14
+%wrt cg
+Ma14 = zeros(6,6);
+body7.x2 = body1.x1;
+body7.y2 = -body7.r;
+
+body7.x1 = -total.len/2;
+body7.y1 = 0;
+
+m = (body7.y2-body7.y1)/(body7.x2-body7.x1);
+c = body7.y1-m*body7.x1;
+
+line =  m*x+c;
+
+r14 = line;
+
+Ca = 1;
+Ar =pi*r14^2;
+
+a22 = rho*Ca*Ar;
+
+m22 =  int(a22, body7.x1, body7.x2);
+
+a33 =a22;
+m33 = m22;
+m44 =0;
+
+%calcultatin m55
+a55 = a33;
+m55 = int(a33*x^2, body7.x1, body7.x2);
+
+%calcultatin m66
+
+m66 = m55;
+
+%calcultatin m26
+m26 =  int(a22*x, body7.x1, body7.x2);
+
+%calcultatin m35
+
+m35 = -m26;
+
+Ma14(2,2) = m22;
+Ma14(3,3) = m33;
+Ma14(4,4) = m44;
+Ma14(5,5) = m55;
+Ma14(6,6) = m66;
+Ma14(2,6) = m26;
+Ma14(6,2) = m26;
+Ma14(3,5) = m35;
+Ma14(5,3) = m35;
+
+%total main body with fin
+Ma1 = Ma11 + Ma12 + Ma13 + Ma14;
+Ma1(1,1) = added_mass_with_lambs_k_factor(total.len/2,body1.r)
+\end{matlabcode}
+\begin{matlaboutput}
+Ma1 = 6x6    
+    1.5691         0         0         0         0         0
+         0   57.2118         0         0         0    3.6480
+         0         0   85.9730         0    8.5139         0
+         0         0         0    0.1284         0         0
+         0         0    8.5139         0   14.9179         0
+         0    3.6480         0         0         0    9.6237
+
+\end{matlaboutput}
+\begin{matlabcode}
+
+\end{matlabcode}
+
+
+\begin{matlabcode}
+%Calculating X axis for thrusters (K lamb)
+Ma2 = zeros(6,6);
+
+ 
+Ma2(1,1) = added_mass_with_lambs_k_factor(body2.l/2,body2.r);
+Ma3 = Ma2;
+
+%body 2
+Ma2cg = body2.H' * Ma2 * body2.H; %calculate the mass matrix at the cg
+
+%body 3
+Ma3cg = body3.H' * Ma3 * body3.H;
+
+%Adding to total added mass matrix
+Ma1 = Ma1 + Ma2cg + Ma3cg
+\end{matlabcode}
+\begin{matlaboutput}
+Ma1 = 6x6    
+    2.5453         0         0         0         0         0
+         0   57.2118         0         0         0    3.6480
+         0         0   85.9730         0    8.5139         0
+         0         0         0    0.1284         0         0
+         0         0    8.5139         0   14.9179         0
+         0    3.6480         0         0         0    9.6551
+
+\end{matlaboutput}
+
+
+\begin{matlabcode}
+% Calculate Added mass of Body 4 Ma4
+Ma4 = zeros(6,6);
+rho = 1000;
+Ca = 1.36; %from table of sheet
+aa = body4.b/2;
+bb = body4.a/2;
+Ar = pi * aa^2;
+
+a11 = rho * Ca * Ar;
+m11 = a11*body4.c;
+
+aa = body4.a/2; %because the direction of motion changed
+bb = body4.b/2;
+Ca = 1.71; %from table
+Ar = pi*aa^2;
+a22 = rho *Ca * Ar;
+m22 = a22*body4.c;
+
+aa = body4.b/2; %motion direction changed
+bb = body4.a/2;
+a44 = 0.15*rho*pi*(bb)^4;
+syms z;
+fun =  a44*z^2;
+m44 = int(fun,[-body4.c/2,body4.c/2]);
+
+aa = body4.a/2;
+bb = body4.b/2;
+a55 = 0.15*rho*pi*(aa)^4;
+fun =  a55*z^2;
+m55 = int(fun,[-body4.c/2,body4.c/2]);
+
+%approximation
+m66 = 0
+\end{matlabcode}
+\begin{matlaboutput}
+m66 = 0
+\end{matlaboutput}
+\begin{matlabcode}
+m33 = added_mass_with_lambs_k_factor(body4.c/2, (body4.a+body4.b)/4)
+\end{matlabcode}
+\begin{matlaboutput}
+m33 = 0.0303
+\end{matlaboutput}
+\begin{matlabcode}
+
+fun =  a11*z;
+m15 = int(fun,[-body4.c/2,body4.c/2]);
+
+fun =  -a22*z;
+m24 = int(fun,[-body4.c/2,body4.c/2]);
+
+Ma4(3,3) = m33;
+Ma4(2,2) = m22;
+Ma4(1,1) = m11;
+Ma4(4,4) = m44;
+Ma4(5,5) = m55;
+Ma4(6,6) = m66;
+Ma4(2,4) = m24;
+Ma4(4,2) = m24;
+Ma4(1,5) = m15;
+Ma4(5,1) = m15;
+
+
+%transform to cg
+%body 4
+Ma4cg = body4.H' * Ma4 * body4.H
+\end{matlabcode}
+\begin{matlaboutput}
+Ma4cg = 6x6    
+    0.3229         0         0         0   -0.0784         0
+         0    2.2102         0    0.5368         0   -0.9725
+         0         0    0.0303         0    0.0133         0
+         0    0.5368         0    0.1304         0   -0.2362
+   -0.0784         0    0.0133         0    0.0249         0
+         0   -0.9725         0   -0.2362         0    0.4279
+
+\end{matlaboutput}
+\begin{matlabcode}
+
+\end{matlabcode}
+
+
+\begin{matlabcode}
+%Added Mass Calculation for body M5
+Ma5 = zeros(6,6);
+bb = body5.l;
+aa = body5.r;
+rho = 1000;
+
+vr = pi*(aa^2)*bb;
+%ASK-> Limit of integration
+Ca = 0.62; %from table
+a11 = rho*Ca*vr;
+m11 = a11*2*aa; %ask this
+
+a22 = a11;
+m22 = m11;
+
+%ASK-> If this is correct or not
+m33 = m22; %ask if this or lambs which one?
+%m33 = added_mass_with_lambs_k_factor(bb/2, aa)
+
+a44 = a22;
+fun = a22*z.^2;
+m44 = int(fun,[-aa,aa]);
+
+m55 = m44;
+
+m66 = 0;
+
+fun =  a11*z;
+m15 = int(fun,[-aa,aa]);
+
+fun = -a22.*z;
+m24 = int(fun,[-aa,aa]);
+
+Ma5(3,3) = m33;
+Ma5(2,2) = m22;
+Ma5(1,1) = m11;
+Ma5(4,4) = m44;
+Ma5(5,5) = m55;
+Ma5(6,6) = m66;
+Ma5(2,4) = m24;
+Ma5(4,2) = m24;
+Ma5(1,5) = m15;
+Ma5(5,1) = m15
+\end{matlabcode}
+\begin{matlaboutput}
+Ma5 = 6x6    
+    0.0052         0         0         0         0         0
+         0    0.0052         0         0         0         0
+         0         0    0.0052         0         0         0
+         0         0         0    0.0000         0         0
+         0         0         0         0    0.0000         0
+         0         0         0         0         0         0
+
+\end{matlaboutput}
+\begin{matlabcode}
+
+%Shift of Ma5 to CG
+
+Ma5cg = body5.H' * Ma5 * body5.H
+\end{matlabcode}
+\begin{matlaboutput}
+Ma5cg = 6x6    
+    0.0052         0         0         0   -0.0007         0
+         0    0.0052         0    0.0007         0    0.0020
+         0         0    0.0052         0   -0.0020         0
+         0    0.0007         0    0.0001         0    0.0003
+   -0.0007         0   -0.0020         0    0.0009         0
+         0    0.0020         0    0.0003         0    0.0008
+
+\end{matlaboutput}
+\begin{matlabcode}
+
+\end{matlabcode}
+
+
+\begin{matlabcode}
+%Added Mass Calculation for body M6
+Ma6 = zeros(6,6);
+bb = body6.l;
+aa = body6.r;
+rho = 1000;
+
+vr = pi*(aa^2)*bb;
+%ASK-> Limit of integration
+Ca = 0.62; %from table
+a11 = rho*Ca*vr;
+m11 = a11*2*aa; %ask this
+
+a22 = a11;
+m22 = m11;
+
+%ASK-> If this is correct or not
+m33 = m22; %ask if this or lambs which one?
+%m33 = added_mass_with_lambs_k_factor(bb/2, aa)
+
+a44 = a22;
+fun = a22*z.^2;
+m44 = int(fun,[-aa,aa]);
+
+m55 = m44;
+
+m66 = 0;
+
+fun =  a11*z;
+m15 = int(fun,[-aa,aa]);
+
+fun = -a22.*z;
+m24 = int(fun,[-aa,aa]);
+
+Ma6(3,3) = m33;
+Ma6(2,2) = m22;
+Ma6(1,1) = m11;
+Ma6(4,4) = m44;
+Ma6(5,5) = m55;
+Ma6(6,6) = m66;
+Ma6(2,4) = m24;
+Ma6(4,2) = m24;
+Ma6(1,5) = m15;
+Ma6(5,1) = m15
+\end{matlabcode}
+\begin{matlaboutput}
+Ma6 = 6x6    
+    0.0026         0         0         0         0         0
+         0    0.0026         0         0         0         0
+         0         0    0.0026         0         0         0
+         0         0         0    0.0000         0         0
+         0         0         0         0    0.0000         0
+         0         0         0         0         0         0
+
+\end{matlaboutput}
+\begin{matlabcode}
+
+%Shift of Ma5 to CG
+
+Ma6cg = body6.H' * Ma6 * body6.H
+\end{matlabcode}
+\begin{matlaboutput}
+Ma6cg = 6x6    
+    0.0026         0         0         0   -0.0003         0
+         0    0.0026         0    0.0003         0    0.0017
+         0         0    0.0026         0   -0.0017         0
+         0    0.0003         0    0.0000         0    0.0002
+   -0.0003         0   -0.0017         0    0.0012         0
+         0    0.0017         0    0.0002         0    0.0011
+
+\end{matlaboutput}
+\begin{matlabcode}
+
+\end{matlabcode}
+
+
+\begin{matlabcode}
+total.Ma = Ma1 +Ma4cg + Ma5cg + Ma6cg
+\end{matlabcode}
+\begin{matlaboutput}
+total = 
+         mass: 52
+          len: 1.6000
+    len_paper: 14
+            k: 0.1143
+          vol: 0.0648
+      density: 802.3273
+           cg: [0 0 0]
+          Mcg: [6x6 double]
+           Ma: [6x6 double]
+
+\end{matlaboutput}
+\begin{matlabcode}
+total_added_mass = total.Ma
+\end{matlabcode}
+\begin{matlaboutput}
+total_added_mass = 6x6    
+    2.8760         0         0         0   -0.0795         0
+         0   59.4298         0    0.5378         0    2.6792
+         0         0   86.0110         0    8.5235         0
+         0    0.5378         0    0.2589         0   -0.2357
+   -0.0795         0    8.5235         0   14.9449         0
+         0    2.6792         0   -0.2357         0   10.0849
+
+\end{matlaboutput}
+\begin{matlabcode}
+total_mass_matrix = total.Mcg
+\end{matlabcode}
+\begin{matlaboutput}
+total_mass_matrix = 6x6    
+   52.0000         0         0         0   -0.1618         0
+         0   52.0000         0    0.1618         0    0.4984
+         0         0   52.0000         0   -0.4984         0
+         0    0.1618         0    0.5127         0   -0.0489
+   -0.1618         0   -0.4984         0    9.1490         0
+         0    0.4984         0   -0.0489         0    9.2813
+
+\end{matlaboutput}
+\begin{matlabcode}
+%added_mass_with_lambs_k_factor(total.len/2, body1.r)
+\end{matlabcode}
+
+
+\begin{matlabcode}
+%drag matrix
+%body 1 + body 7 + body 8
+%stored in body 1
+
+body1.D = zeros(6,6);
+body1.Dy = 2*body1.r; 
+body1.Dz = 2*body1.r;
+body1.CD22 = 0.15; %from table
+body1.CD33 = 0.15; %from table
+body1.SX = pi*body1.r^2;
+body1.CD11 = 0.1;
+
+body1.D(1,1) = 0.5*rho*body1.SX * body1.CD11;
+body1.D(2,2) = 0.5*rho *body1.CD22*body1.Dy*(body1.l+body7.l + body8.r);
+body1.D(3,3) = 0.5*rho *body1.CD33*body1.Dz*(body1.l+body7.l + body8.r);
+body1.D(5,5) = (1/64)*rho *body1.CD33*body1.Dz*(body1.l + body7.l + body8.r)^4;
+body1.D(6,6) = (1/64)*rho *body1.CD22*body1.Dy*(body1.l + body7.l + body8.r)^4;
+body1.D
+\end{matlabcode}
+\begin{matlaboutput}
+ans = 6x6    
+    2.0517         0         0         0         0         0
+         0   27.4286         0         0         0         0
+         0         0   27.4286         0         0         0
+         0         0         0         0         0         0
+         0         0         0         0    3.5109         0
+         0         0         0         0         0    3.5109
+
+\end{matlaboutput}
+\begin{matlabcode}
+
+
+%body 2
+body2.D = zeros(6,6);
+body2.Dy = 2*body2.r; 
+body2.Dz = 2*body2.r;
+body2.CD22 = 0.2;
+body2.CD33 = 0.2;
+body2.SX = pi*body2.r^2;
+body2.CD11 = 0.1;
+
+body2.D(1,1) = 0.5*rho*body2.SX * body2.CD11;
+body2.D(2,2) = 0; %because of body shape. it does not create any significant drag compared to the main body
+body2.D(3,3) = 0.5*rho *body2.CD33*body2.Dz*(body2.l);
+body2.D(5,5) = (1/64)*rho *body2.CD33*body2.Dz*(body2.l )^4;
+body2.D(6,6) = 0; %because of body shape. it does not create any significant drag compared to the main body
+body2.D
+\end{matlabcode}
+\begin{matlaboutput}
+ans = 6x6    
+    0.6637         0         0         0         0         0
+         0         0         0         0         0         0
+         0         0    3.2686         0         0         0
+         0         0         0         0         0         0
+         0         0         0         0    0.0016         0
+         0         0         0         0         0         0
+
+\end{matlaboutput}
+\begin{matlabcode}
+
+%body 3
+body3.D = body2.D;
+
+
+%body 4 not complete yet
+body4.D = zeros(6,6);
+
+body4.Dx = body4.a;
+body4.Dy = body4.b;
+
+body4.CD11 = 0.7;
+body4.CD22 = 0.7;
+
+body4.Sz = body4.a * body4.b;
+body4.CD33 = 1.10 + 0.02*(body4.a/body4.b + body4.b/body4.a);
+
+body4.D(1,1) = 0.5*rho*body4.CD11 * body4.Dx;
+body4.D(2,2) = 0.5*rho*body4.CD22 * body4.Dy;
+
+body4.D(3,3) = 0; %because of body shape. it does not create any significant drag compared to the main body
+
+body4.D(6,6) = 0;
+
+body4.D(4,4) = (1/64)*rho*body4.CD22*body4.Dy*(body4.c)^4;
+body4.D(5,5) = 0; %because of body shape. it does not create any significant drag compared to the main body
+body4.D
+\end{matlabcode}
+\begin{matlaboutput}
+ans = 6x6    
+   28.0000         0         0         0         0         0
+         0   12.0000         0         0         0         0
+         0         0         0         0         0         0
+         0         0         0    0.0016         0         0
+         0         0         0         0         0         0
+         0         0         0         0         0         0
+
+\end{matlaboutput}
+\begin{matlabcode}
+
+%body 5
+body5.D = zeros(6,6);
+
+body5.Dx = 2*body5.r;
+body5.Dy = 2*body5.r;
+
+body5.CD11 = 0.3; %circular
+body5.CD22 = 0.3; %circular
+
+body5.CD33 = 0.9;
+
+body5.D(1,1) = 0.5*rho*body5.CD11*body5.Dx;
+body5.D(2,2) = 0.5*rho*body5.CD22 * body5.Dy;
+
+body5.D(3,3) = 0; %because of body shape. it does not create any significant drag compared to the main body
+
+body5.D(6,6) = 0; %formula
+
+body5.D(4,4) = (1/64)*rho*body5.CD22*body5.Dy*(body5.l)^4;
+body5.D(5,5) = 0; %because of body shape. it does not create any significant drag compared to the main body
+body5.D
+\end{matlabcode}
+\begin{matlaboutput}
+ans = 6x6    
+    8.5714         0         0         0         0         0
+         0    8.5714         0         0         0         0
+         0         0         0         0         0         0
+         0         0         0    0.0000         0         0
+         0         0         0         0         0         0
+         0         0         0         0         0         0
+
+\end{matlaboutput}
+\begin{matlabcode}
+
+%body 6
+body6.D = zeros(6,6);
+
+body6.Dx = 2*body6.r;
+body6.Dy = 2*body6.r;
+
+body6.CD11 = 0.3; %circular
+body6.CD22 = 0.3; %circular
+
+body6.CD33 = 0.9;
+
+body6.D(1,1) = 0.5*rho*body6.CD11*body6.Dx;
+body6.D(2,2) = 0.5*rho*body6.CD22 * body6.Dy;
+
+body6.D(3,3) = 0; %because of body shape. it does not create any significant drag compared to the main body
+
+body6.D(6,6) = 0; %formula
+
+body6.D(4,4) = (1/64)*rho*body6.CD22*body6.Dy*(body6.l)^4;
+body6.D(5,5) = 0; %because of body shape. it does not create any significant drag compared to the main body
+
+body6.D
+\end{matlabcode}
+\begin{matlaboutput}
+ans = 6x6    
+    8.5714         0         0         0         0         0
+         0    8.5714         0         0         0         0
+         0         0         0         0         0         0
+         0         0         0    0.0000         0         0
+         0         0         0         0         0         0
+         0         0         0         0         0         0
+
+\end{matlaboutput}
+\begin{matlabcode}
+%body 7
+body7.D = zeros(6,6);
+
+
+%body 8
+body8.D = zeros(6,6);
+
+\end{matlabcode}
+
+
+
+\vspace{1em}
+\begin{matlabcode}
+function ma11 = added_mass_with_lambs_k_factor(a,b)
+    e = sqrt(1-(b/a)^2);
+    alpha0 = 2*((1-e^2)/e^3)*(1/2*(log((1+e)/(1-e))) - e);
+    k1 = alpha0/(2-alpha0);
+    mdf = (4/3)*(pi*1000*a*b^2);
+    ma11 = k1*mdf;
+
+end
+
+function h = H(r)
+    h = [eye(3) zeros(3,3);
+        S(r), eye(3)];
+    h = h';
+
+
+end
+
+
+
+
+function s= S(r)
+    x = r(1);
+    y = r(2);
+    z = r(3);
+    
+    s = [0, -z, y;
+        z, 0, -x;
+        -y, x, 0];
+
+end
+\end{matlabcode}
+
+\end{document}

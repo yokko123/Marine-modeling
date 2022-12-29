@@ -1,0 +1,370 @@
+function Para=Parameters()
+global Para
+
+%% Initial Speed and position in Earth-fixed frame
+% NO EDIT NEEDED
+Para.ICPos = [0 0 2 0 0 0];
+Para.ICSpeed = [0 0 0 0 0 0] ;
+
+%% General parameters
+% NO EDIT NEEDED
+Para.rho_water = 1000 ;                     % Masse volumique de l'eau (kg/m^3)
+Para.R = 0.115 ;                             % Sparus Radius (m)
+Para.L = 1.6;  	                            % Sparus length (m)
+Para.m = 52 ; 	                            % Sparus mass (kg)
+Para.mb = 52.1;                           	% Sparus buoyancy mass  (kg) 
+Para.g = 9.81 ;                             % Earth Gravity (m*s^(-2))
+Para.P = Para.m * Para.g;	                % Sparus weight (N)
+Para.B = Para.mb * Para.g;	                % Buoyancy (N)
+
+%% Center of gravity and Buoyancy position in body-fied frame
+% NO EDIT NEEDED
+Para.xg = 0 ;    %x-positon of Center of gravity
+Para.yg = 0 ;    %y-positon of Center of gravity
+Para.zg = 0 ;    %z-positon of Center of gravity
+
+Para.rg = [Para.xg Para.yg Para.zg]' ;
+
+
+Para.xb = 0      ;    % x-positon of Center of Buoyancy
+Para.yb = 0      ;    % y-positon of Center of Buoyancy
+Para.zb = -0.02  ;    % z-positon of Center of Buoyancy
+
+Para.rb = [Para.xb Para.yb Para.zb]' ;
+
+%% Body positions
+
+% Main Body S0;
+Para.S0.r=[0,0,0]'; % Position (m)
+% First Body S1;
+Para.S1.r=[-0.422857142857143,0.179285714285714,0]'; % Position (m)
+% Second Body S2;
+Para.S2.r=[-0.422857142857143,-0.179285714285714,0]'; % Position (m)
+
+%% Body Mass matrices
+
+
+% Main Body S0;
+Para.S0.m= 45.9026; 
+Para.S0.I_xx = 0.2893;    
+Para.S0.I_yy = 7.9641;    
+Para.S0.I_zz = 7.9641;    
+
+Para.S0.Mb = -diag([Para.S0.m Para.S0.m Para.S0.m Para.S0.I_xx Para.S0.I_yy Para.S0.I_zz]) ; 
+Para.S0.Mb(2,6) = 2.9269;
+Para.S0.Mb(6,2) = 2.9269;
+Para.S0.Mb(3,5) = -2.9269;
+Para.S0.Mb(5,3) = -2.9269;
+
+% First Body S1;
+Para.S1.m= 2.6776; 
+Para.S1.I_xx = 0.0917;    
+Para.S1.I_yy = 0.4957;    
+Para.S1.I_zz = 0.5817;    
+
+Para.S1.Mb = -diag([Para.S1.m Para.S1.m Para.S1.m Para.S1.I_xx Para.S1.I_yy Para.S1.I_zz]) ; 
+Para.S1.Mb(1,6) = -0.4801;
+Para.S1.Mb(6,1) = -0.4801;
+Para.S1.Mb(2,6) = -1.1322;
+Para.S1.Mb(6,2) = -1.1322;
+Para.S1.Mb(3,4) = 0.4801;
+Para.S1.Mb(4,3) = 0.4801;
+Para.S1.Mb(3,5) = 1.1322;
+Para.S1.Mb(5,3) = 1.1322;
+Para.S1.Mb(4,5) = 0.2030;
+Para.S1.Mb(5,4) = 0.2030;
+% Second Body S2;
+Para.S2.m= 2.6776; 
+Para.S2.I_xx = 0.0917;    
+Para.S2.I_yy = 0.4957;    
+Para.S2.I_zz = 0.5817;    
+
+Para.S2.Mb = -diag([Para.S2.m Para.S2.m Para.S2.m Para.S2.I_xx Para.S2.I_yy Para.S2.I_zz]) ; 
+Para.S2.Mb(1,6) = 0.4801;
+Para.S2.Mb(6,1) = 0.4801;
+Para.S2.Mb(2,6) = -1.1322;
+Para.S2.Mb(6,2) = -1.1322;
+Para.S2.Mb(3,4) = -0.4801;
+Para.S2.Mb(4,3) = -0.4801;
+Para.S2.Mb(3,5) = 1.1322;
+Para.S2.Mb(5,3) = 1.1322;
+Para.S2.Mb(4,5) = -0.2030;
+Para.S2.Mb(5,4) = -0.2030;
+% Second Body S3;
+Para.S3.m= 0.5659; 
+Para.S3.I_xx = 0.0365;    
+Para.S3.I_yy = 0.1464;    
+Para.S3.I_zz = 0.1099;    
+
+Para.S3.Mb = -diag([Para.S3.m Para.S3.m Para.S3.m Para.S3.I_xx Para.S3.I_yy Para.S3.I_zz]) ; 
+Para.S3.Mb(1,5) = -0.1374;
+Para.S3.Mb(5,1) = -0.1374;
+Para.S3.Mb(2,4) = 0.1374;
+Para.S3.Mb(4,2) = 0.1374;
+Para.S3.Mb(2,6) = -0.2490;
+Para.S3.Mb(6,2) = -0.2490;
+Para.S3.Mb(3,5) = 0.2490;
+Para.S3.Mb(5,3) = 0.2490;
+Para.S3.Mb(4,6) = -0.0605;
+Para.S3.Mb(6,4) = -0.0605;
+
+% Second Body S4;
+Para.S4.m= 0.1176; 
+Para.S4.I_xx = 0.0025;    
+Para.S4.I_yy = 0.0207;    
+Para.S4.I_zz = 0.0183;    
+
+Para.S4.Mb = -diag([Para.S4.m Para.S4.m Para.S4.m Para.S4.I_xx Para.S4.I_yy Para.S4.I_zz]) ; 
+Para.S4.Mb(1,5) = -0.0168;
+Para.S4.Mb(5,1) = -0.0168;
+Para.S4.Mb(2,4) = 0.0168;
+Para.S4.Mb(4,2) = 0.0168;
+Para.S4.Mb(2,6) = 0.0464;
+Para.S4.Mb(6,2) = 0.0464;
+Para.S4.Mb(3,5) = -0.0464;
+Para.S4.Mb(5,3) = -0.0464;
+Para.S4.Mb(4,6) = 0.0066;
+Para.S4.Mb(6,4) = 0.0066;
+
+% Second Body S5;
+Para.S5.m= 0.0588; 
+Para.S5.I_xx = 0.0009;    
+Para.S5.I_yy = 0.0264;    
+Para.S5.I_zz = 0.0254;    
+
+Para.S5.Mb = -diag([Para.S5.m Para.S5.m Para.S5.m Para.S5.I_xx Para.S5.I_yy Para.S5.I_zz]) ; 
+Para.S5.Mb(1,5) = -0.0076;
+Para.S5.Mb(5,1) = -0.0076;
+Para.S5.Mb(2,4) = 0.0076;
+Para.S5.Mb(4,2) = 0.0076;
+Para.S5.Mb(2,6) = 0.0386;
+Para.S5.Mb(6,2) = 0.0386;
+Para.S5.Mb(3,5) = -0.0386;
+Para.S5.Mb(5,3) = -0.0386;
+Para.S5.Mb(4,6) = 0.0050;
+Para.S5.Mb(6,4) = 0.0050;
+%% Body added Mass matrices
+
+% Main Body S0;
+Para.S0.ma_u = 2.5453;    % surge
+Para.S0.ma_v = 57.2118;    % sway
+Para.S0.ma_w = 85.9730;    % heave
+Para.S0.ma_p = 0.1284;    % roll
+Para.S0.ma_q = 14.9179;    % pitch
+Para.S0.ma_r = 9.6865;    % yaw
+  
+Para.S0.Ma = -diag([Para.S0.ma_u Para.S0.ma_v Para.S0.ma_w Para.S0.ma_p Para.S0.ma_q Para.S0.ma_r]) ; 
+Para.S0.Ma(2,6) = 3.6480;
+Para.S0.Ma(6,2) = 3.6480;
+Para.S0.Ma(3,5) = 8.5139;
+Para.S0.Ma(5,3) = 8.5139;
+% First Body S1;
+Para.S1.ma_u = 0.4881;    % surge
+Para.S1.ma_v = 0;    % sway
+Para.S1.ma_w = 0;    % heave
+Para.S1.ma_p = 0;    % roll
+Para.S1.ma_q = 0;    % pitch
+Para.S1.ma_r = 0.0157;    % yaw
+
+Para.S1.Ma = -diag([Para.S1.ma_u Para.S1.ma_v Para.S1.ma_w Para.S1.ma_p Para.S1.ma_q Para.S1.ma_r]) ; 
+Para.S1.Ma(1,6) = -0.0875;
+Para.S1.Ma(6,1) = -0.0875;
+
+
+% Second Body S2;   
+Para.S2.ma_u = 0.4881;    % surge
+Para.S2.ma_v = 0;    % sway
+Para.S2.ma_w = 0;    % heave
+Para.S2.ma_p = 0;    % roll
+Para.S2.ma_q = 0;    % pitch
+Para.S2.ma_r = 0.0157;    % yaw
+
+Para.S2.Ma = -diag([Para.S2.ma_u Para.S2.ma_v Para.S2.ma_w Para.S2.ma_p Para.S2.ma_q Para.S2.ma_r]) ; 
+Para.S2.Ma(1,6) = -0.0875;
+Para.S2.Ma(6,1) = -0.0875;
+
+
+% Second Body S3;   
+Para.S3.ma_u = 0.3229;    % surge
+Para.S3.ma_v = 0.2102;    % sway
+Para.S3.ma_w = 0.0303;    % heave
+Para.S3.ma_p = 0.1304;    % roll
+Para.S3.ma_q = 0.0249;    % pitch
+Para.S3.ma_r = 0.4279;    % yaw
+
+Para.S3.Ma = -diag([Para.S3.ma_u Para.S3.ma_v Para.S3.ma_w Para.S3.ma_p Para.S3.ma_q Para.S3.ma_r]) ;
+Para.S3.Ma(1,5) = -0.0784;
+Para.S3.Ma(5,1) = -0.0784;
+Para.S3.Ma(2,4) = 0.5368;
+Para.S3.Ma(4,2) = 0.5368;
+Para.S3.Ma(2,6) = -0.9725;
+Para.S3.Ma(6,2) = -0.9725;
+Para.S3.Ma(3,5) = 0.0133;
+Para.S3.Ma(5,3) = 0.0133;
+Para.S3.Ma(4,6) = -0.2362;
+Para.S3.Ma(6,4) = -0.2362;
+
+% Second Body S4;   
+Para.S4.ma_u = 0.0052;    % surge
+Para.S4.ma_v = 0.0052;    % sway
+Para.S4.ma_w = 0.0052;    % heave
+Para.S4.ma_p = 0.0001;    % roll
+Para.S4.ma_q = 0.0009;    % pitch
+Para.S4.ma_r = 0.0008;    % yaw
+
+Para.S4.Ma = -diag([Para.S4.ma_u Para.S4.ma_v Para.S4.ma_w Para.S4.ma_p Para.S4.ma_q Para.S4.ma_r]) ;
+Para.S4.Ma(1,5) = -0.0007;
+Para.S4.Ma(5,1) = -0.0007;
+Para.S4.Ma(2,4) = 0.0007;
+Para.S4.Ma(4,2) = 0.0007;
+Para.S4.Ma(2,6) = 0.002;
+Para.S4.Ma(6,2) = 0.002;
+Para.S4.Ma(3,5) = -0.002;
+Para.S4.Ma(5,3) = -0.002;
+Para.S4.Ma(4,6) = 0.0002;
+Para.S4.Ma(6,4) = 0.0002;
+
+% Second Body S5;   
+Para.S5.ma_u = 0.0026;    % surge
+Para.S5.ma_v = 0.0026;    % sway
+Para.S5.ma_w = 0.0026;    % heave
+Para.S5.ma_p = 0;    % roll
+Para.S5.ma_q = 0.0012;    % pitch
+Para.S5.ma_r = 0.0011;    % yaw
+
+Para.S5.Ma = -diag([Para.S5.ma_u Para.S5.ma_v Para.S5.ma_w Para.S5.ma_p Para.S5.ma_q Para.S5.ma_r]) ;
+Para.S5.Ma(1,5) = -0.0003;
+Para.S5.Ma(5,1) = -0.0003;
+Para.S5.Ma(2,4) = 0.0003;
+Para.S5.Ma(4,2) = 0.0003;
+Para.S5.Ma(2,6) = 0.0017;
+Para.S5.Ma(6,2) = 0.0017;
+Para.S5.Ma(3,5) = -0.0017;
+Para.S5.Ma(5,3) = -0.0017;
+Para.S5.Ma(4,6) = 0.0002;
+Para.S5.Ma(6,4) = 0.0002;
+
+%% Generalized mass matrix
+% NO EDIT NEEDED
+Para.S0.Mg = Para.S0.Mb + Para.S0.Ma  ; 
+Para.S1.Mg = Para.S1.Mb + Para.S1.Ma  ;
+Para.S2.Mg = Para.S2.Mb + Para.S2.Ma ;
+Para.S3.Mg = Para.S3.Mb + Para.S3.Ma;
+
+Para.Mg = Para.S0.Mg + Para.S1.Mg + Para.S2.Mg + Para.S3.Mg;
+
+
+%% Generalized coriolis matrix
+
+% Computed in RovModel.m
+
+%% Friction matrices
+% MAYBE NOT NEEDED
+% Main Body S0;
+Para.S0.kuu = 2.0517;    % surge
+Para.S0.kvv = 27.4286;    % sway
+Para.S0.kww = 27.4286;    % heave
+Para.S0.kpp = 0;    % roll
+Para.S0.kqq = 3.5;    % pitch
+Para.S0.krr = 3.5;    % yaw
+
+Para.S0.Kq = -diag([Para.S0.kuu Para.S0.kvv Para.S0.kww Para.S0.kpp Para.S0.kqq Para.S0.krr]) ;    %Quadratic friction matrix
+
+% First Body S1;
+Para.S1.kuu = 0.6637;    % surge
+Para.S1.kvv = 0;    % sway
+Para.S1.kww = 3.26;    % heave
+Para.S1.kpp = 0;    % roll
+Para.S1.kqq = 0.0016;    % pitch
+Para.S1.krr = 0;    % yaw
+
+Para.S1.Kq = -diag([Para.S1.kuu Para.S1.kvv Para.S1.kww Para.S1.kpp Para.S1.kqq Para.S1.krr]) ;    %Quadratic friction matrix
+
+
+% Second Body S1;
+Para.S2.kuu = 0.6637;    % surge
+Para.S2.kvv = 0;    % sway
+Para.S2.kww = 3.26;    % heave
+Para.S2.kpp = 0;    % roll
+Para.S2.kqq = 0.0016;    % pitch
+Para.S2.krr = 0;    % yaw
+
+Para.S2.Kq = -diag([Para.S2.kuu Para.S2.kvv Para.S2.kww Para.S2.kpp Para.S2.kqq Para.S2.krr]) ;    %Quadratic friction matrix
+
+
+Para.S3.kuu = 28;    % surge
+Para.S3.kvv = 12;    % sway
+Para.S3.kww = 0;    % heave
+Para.S3.kpp = 0.0016;    % roll
+Para.S3.kqq = 0;    % pitch
+Para.S3.krr = 0;    % yaw
+
+Para.S3.Kq = -diag([Para.S3.kuu Para.S3.kvv Para.S3.kww Para.S3.kpp Para.S3.kqq Para.S3.krr]) ;    %Quadratic friction matrix
+%% Thruster modelling
+% NO EDIT NEEDED 
+%Thruster positions in body-fixed frame
+
+Para.d1x = 0        ; 
+Para.d1y = 0        ;
+Para.d1z = 0.08     ;
+Para.d2x = -0.59    ; 
+Para.d2y = 0.17     ;
+Para.d2z = 0        ;
+Para.d3x = -0.59    ;
+Para.d3y = -0.17    ;
+Para.d3z = 0        ;
+
+
+Para.rt1 = [Para.d1x, Para.d1y, Para.d1z]' ;
+Para.rt2 = [Para.d2x, Para.d2y, Para.d2z]' ;
+Para.rt3 = [Para.d3x, Para.d3y, Para.d3z]' ;
+
+
+Para.rt = [Para.rt1 Para.rt2 Para.rt3] ;
+
+%Thruster gains
+
+Para.kt1 = 28.5    ;
+Para.kt2 = 30    ;
+Para.kt3 = 30    ;
+
+
+%Thruster gain vectors
+
+Para.Kt=[Para.kt1;Para.kt2;Para.kt3];
+
+%Thruster time constants
+
+Para.Tau1 = 0.4 ;
+Para.Tau2 = 0.8 ;
+Para.Tau3 = 0.8 ;
+
+
+%Thruster time constant vectors
+
+Para.Tau = [Para.Tau1;Para.Tau2;Para.Tau3] ;
+
+% Mapping of thruster
+
+Para.Eb_F = [0,1,1;
+            0,0,0;
+            1,0,0];
+    
+Para.Eb_M = [0,0,0;
+            0,0,0;
+            0,-0.17,0.17]  ;
+
+Para.Eb = [ Para.Eb_F ; Para.Eb_M ] ;
+
+% Inverse Mapping of thruster
+Para.Ebinv = pinv(Para.Eb) ;
+
+end
+
+
+
+
+
+ 
+           
+
